@@ -19,7 +19,7 @@ public class JavaApplication6 {
             System.out.println("4.. Exit");
             System.out.println("Seleccione una opcion");
             int opcion = Integer.parseInt(teclado.nextLine());  
-            menu(opcion); 
+            menu(opcion); //aqui llamo me metodo 
         }
     }
     public static void menu(int opcion){
@@ -83,7 +83,7 @@ public class JavaApplication6 {
         }else {
             System.out.println("No. de Caracteres no valido");
         }
-        codig = new int[b][a];  //Aqui esta la asigancion de datos a la matris bidimencional 
+        codig = new int[b][a];  //Primera Matriz ------------------------------------------------------------------- 
         int u= 0,p=0,t=0;
         for (int i =0; i<b; i++){
             for(int j = 0; j <a; j++){
@@ -118,7 +118,7 @@ public class JavaApplication6 {
         u=0;
         //System.out.println(textElements[w]);
         //System.out.println(e);
-        valoi = new int [s][e];
+        valoi = new int [s][e];  //SEGUNDA MATRIZ------------------------------------------------------------
         for(int i=0;i<s;i++){
             for(int j=0;j<e;j++){
                 valoi[i][j]=Integer.valueOf(textElements[u]);
@@ -129,13 +129,21 @@ public class JavaApplication6 {
         System.out.println(Arrays.deepToString(valoi));
         System.out.println("La matris dada es de: " + s + " * "+ e );
         //Multiplicacion de Matriz
-       /* int MatriR [][]= new int [b][e];
-        for(int i = 0; i <a;i++){
-           for(int j= 0; j< s;j++){
-               MatriR[i][j]=codig[i][j]* valoi[i][j]+codig[i][j+1]*valoi[i+1][j];
-           }
-        }
-        System.out.println(Arrays.deepToString(MatriR));*/
+        System.out.println(a +" -- "+s);
+       int MatriR [][]= new int [b][e];
+        
+        for(int i = 0; i < codig.length;i++){
+            for(int j = 0; j<valoi[0].length;j++){
+                int suma =0;
+                    for(int k=0;k<codig[0].length;k++){
+                        suma+= codig[i][k]*valoi[k][j];
+                        if(k == valoi[0].length-1){
+                            System.out.print("\t"+suma);
+                        }
+                        MatriR[i][j]=suma;
+                    }System.out.println();
+            }System.out.println();
+        } 
     }
     /*
     por el momento pendiete ----
