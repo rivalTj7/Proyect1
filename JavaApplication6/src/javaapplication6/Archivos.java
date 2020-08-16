@@ -46,18 +46,7 @@ public class Archivos {
         
         return (texto + ","+ a);
     }
-    public double [][]adjunta(double [][]matriz){
-        double[][]tempAdjunta=new double[matriz.length][matriz.length];
-         for(int i=0;i<tempAdjunta.length;i++){
-            for(int j=0;j<tempAdjunta.length;j++){
-                
-        
-                
-            }
-        }
-        return tempAdjunta;
-    }
-     /* public double Determinante (int i, double [][]matriz){
+    public double Determinante (int i, double [][]matriz){
         if (matriz.length ==2){
             double deter=matriz[0][0]*matriz[1][1]-matriz[0][1]*matriz[1][0];
             return deter;
@@ -66,7 +55,7 @@ public class Archivos {
             double deter=0;
             for (int j=0;j<matriz.length;j++){
                double[][]temp = this.subMatriz(i,j,matriz);
-               deter=deter+Math.pow(-1, i+j)*matriz[i][j]*this.Determinante(0,temp);
+               deter+=(Math.pow(-1, i+j)*matriz[i][j]*this.Determinante(0,temp));
             }
             return deter;
         }
@@ -79,7 +68,7 @@ public class Archivos {
             if(k!=i){
                 count2=0;
                 for(int l = 0; l < matriz.length; l++){
-                    if(l!=0){
+                    if(l!=j){
                         temp[count1][count2]=matriz[k][l];
                         count2++;
                     }
@@ -88,6 +77,73 @@ public class Archivos {
             }
         }
         return temp;
-    }*/
+    }
+   
+    public double [][]adjunta(double [][]matriz){
+        double[][]tempAdjunta=new double[matriz.length][matriz.length];
+         for(int i=0;i<tempAdjunta.length;i++){
+            for(int j=0;j<tempAdjunta.length;j++){
+                double[][]temp = this.subMatriz(i, j, matriz);
+                double elementoAdjunto=Math.pow(-1, i+j)*this.Determinante(0,temp);
+                tempAdjunta[i][j]=elementoAdjunto;
+            }
+        }
+        return tempAdjunta;
+    }
+    public double[][]Transpuesta(double [][]matrizAdj){
+        double [][]Transpuesta = new double[matrizAdj.length][matrizAdj.length];
+        for (int i =0;i<Transpuesta.length;i++){
+            for (int j =0;j<Transpuesta.length;j++){
+                Transpuesta[i][j]=matrizAdj[j][i];  
+            }
+        }return Transpuesta;
+    }
+    
+    /*public static double Mensa(double [][]matriz){
+        double inversa [][];
+        
+        for (int i =0;i<matriz.length;i++){
+            for (int j=0;j<matriz.length;j++){
+                String Mensa = matriz[i][j]+"\t";
+            }
+        }
+        return inversa;
+    } */
+    public int [][]inv(double dete,double [][]matrizTran){
+        int a, inveInt [][] = new int [matrizTran.length][matrizTran.length];
+        double inversa [][]= new double [matrizTran.length][matrizTran.length];
+        if (dete ==0){
+            
+        }else {
+            for (int i =0;i<matrizTran.length;i++){
+                for (int j=0;j<matrizTran.length;j++){
+                    inversa [i][j]=matrizTran[i][j]/dete;
+                }
+            }
+            for (int i =0;i<matrizTran.length;i++){
+                for (int j=0;j<matrizTran.length;j++){
+                    a = (int)(inversa[i][j]);
+                    inveInt[i][j]=a;
+                }
+            }
+        }
+        return inveInt;
+    }
+    public int [][]multiMa(int [][] codig,int [][]valoi){
+        int MatriR [][]= new int [codig.length][valoi.length];     
+        for(int i = 0; i < codig.length;i++){
+            for(int j = 0; j<valoi[0].length;j++){
+                int suma =0;
+                for(int k=0;k<codig[0].length;k++){
+                    suma+= codig[i][k]*valoi[k][j];
+                    if(k == valoi[0].length-1){
+                        // System.out.print(suma);
+                    }
+                    MatriR[i][j]=suma;
+                }//System.out.println();
+            }
+        }
+        return MatriR; 
+    }
 }
 

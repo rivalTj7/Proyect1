@@ -152,17 +152,18 @@ public class JavaApplication6 {
             }
         }
         System.out.println(Arrays.deepToString(MatriR));
+        System.out.println(Arrays.deepToString(n.multiMa(codig, valoi)));
         }else {
            System.out.println("Matris errones.. ");
        }
     }
-    public static void desifrar(){
-        String matri1,matri2;
+    public static void desifrar(){//--------------------------------------------------------------------------------------------------------------
+       String matri1,matri2;
         matri1 = n.leerTxt(ubicacion1);
         matri2 = n.leerTxt(ubicacion2);
         String  valores,totalText;
-        double mat1[][],mat2[][];
-        int t , p;
+        double mat2[][],ee[][],aa[][];
+        int t , p,mat1[][],inver [][], multiM[][];
         t=0;
         p=0;
         matri1.split(",");
@@ -175,8 +176,8 @@ public class JavaApplication6 {
         for (int i =0; i<text2.length-1; i++){
             p++;
         }
-        System.out.println("La primera matris es: " + (textElements.length-1));
-        System.out.println("La segunda matris es: " + (text2.length-1));
+        //System.out.println("La primera matris es: " + (textElements.length-1));
+        //System.out.println("La segunda matris es: " + (text2.length-1));
         int w = textElements.length-1;
         int s = Integer.valueOf(textElements[w]);
         int e = w/s;
@@ -185,7 +186,7 @@ public class JavaApplication6 {
         int s1 = Integer.valueOf(text2[w1]);
         int e1 = w1/s1;
         int u1=0;
-        mat1 = new double [s][e];  //SEGUNDA MATRIZ------------------------------------------------------------
+        mat1 = new int [s][e];  //Primera MATRIZ------------------------------------------------------------
         for(int i=0;i<s;i++){
             for(int j=0;j<e;j++){
                 mat1[i][j]=Integer.valueOf(textElements[u]);
@@ -207,9 +208,44 @@ public class JavaApplication6 {
         System.out.println("La matris dada es de: " + s1 + " * "+ e1);
         //Funcion inversa prueva 1 
         //logica de la invera: determinante, multiplicarlo por el A 
-        double ad [][];
-        ad = n.adjunta(mat2);
-        System.out.println(Arrays.deepToString(ad));
+        double a =n.Determinante(0, mat2);
+        ee = new double [s1][e1];
+        aa = new double [s1][e1];
+        inver = new int [s1][e1];
+        System.out.println("El determinante de la matriz es: "+a);
+        ee = n.adjunta(mat2);
+        aa = n.Transpuesta(ee);
+        //System.out.println(Arrays.deepToString(ee));
+        //System.out.println(Arrays.deepToString(aa));
+        if (a!=0){
+        inver = (n.inv(a, aa));   
+        System.out.println("La inversa de la matriz 2 es: "+Arrays.deepToString(inver));
+        }else {
+        System.out.println("No se puede encontrar la inversa de la matriz con determinante 0");
+        }
+        multiM=new int [mat1.length][inver.length];
+        int uuu;
+        uuu= multiM.length*multiM[0].length;
+        
+
+        if(e==s1){
+            multiM= n.multiMa(mat1, inver);
+             System.out.println("La Multiplicacion es:" + Arrays.deepToString(multiM));
+        }else{
+            System.out.println("Error de matriz");
+        } 
+        byte ascii[]= new byte [uuu];
+        int ww;
+        ww=0;
+         for(int i=0;i<multiM.length;i++){
+            for(int j=0;j<multiM[0].length;j++){
+               ascii[ww]=(byte)multiM[i][j];
+                ww++;
+            }
+        }
+        String ssl = new String(ascii);
+        System.out.println(ssl);
+            
     }
       /*public static void Gauss(String palabra){
         int contador=0;
