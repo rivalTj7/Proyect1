@@ -9,6 +9,8 @@ public class JavaApplication6 {
     */
     public static  Archivos n = new Archivos(); //aqui llamo a mi proceso de escritura
     public static String ubicacion;
+    public static String ubicacion1;
+    public static String ubicacion2;
     public static void main(String[] args) { 
         Scanner teclado = new Scanner(System.in);
         while(true){
@@ -35,6 +37,11 @@ public class JavaApplication6 {
                 cifrar(palabra);
                 break;
             case 2:
+                System.out.println("Ingrese ruta del primer archivo: ");
+                ubicacion1=teclado.nextLine();
+                System.out.println("Ingrese ruta del segundo archivo: ");
+                ubicacion2=teclado.nextLine();
+                desifrar();
                 break;
             case 3:
                 break;
@@ -129,36 +136,82 @@ public class JavaApplication6 {
         System.out.println(Arrays.deepToString(valoi));
         System.out.println("La matris dada es de: " + s + " * "+ e );
         //Multiplicacion de Matriz
-        System.out.println(a +" -- "+s);
+       System.out.println(a +" -- "+s);
+       if (a==s){
        int MatriR [][]= new int [b][e];
-        
         for(int i = 0; i < codig.length;i++){
             for(int j = 0; j<valoi[0].length;j++){
                 int suma =0;
                     for(int k=0;k<codig[0].length;k++){
                         suma+= codig[i][k]*valoi[k][j];
                         if(k == valoi[0].length-1){
-                            System.out.print("\t"+suma);
+                           // System.out.print(suma);
                         }
                         MatriR[i][j]=suma;
-                    }System.out.println();
-            }System.out.println();
-        } 
-    }
-    /*
-    por el momento pendiete ----
-    */
-    /* public static void desifrar(String palabra){
-        int contador=0;
-        char[] aCaracteres = palabra.toCharArray();
-
-        for (int x=0;x<aCaracteres.length;x++){
-        //System.out.println("[" + x + "] " + aCaracteres[x]);
-        contador++;
+                    }//System.out.println();
+            }
         }
-        System.out.println("El numero de caracteres es: " + contador);
+        System.out.println(Arrays.deepToString(MatriR));
+        }else {
+           System.out.println("Matris errones.. ");
+       }
     }
-      public static void Gauss(String palabra){
+    public static void desifrar(){
+        String matri1,matri2;
+        matri1 = n.leerTxt(ubicacion1);
+        matri2 = n.leerTxt(ubicacion2);
+        String  valores,totalText;
+        double mat1[][],mat2[][];
+        int t , p;
+        t=0;
+        p=0;
+        matri1.split(",");
+        matri2.split(",");
+        String[] textElements = matri1.split(",");
+        String[] text2 =  matri2.split(",");
+        for (int i =0; i<textElements.length-1; i++){  
+            t++;
+        }
+        for (int i =0; i<text2.length-1; i++){
+            p++;
+        }
+        System.out.println("La primera matris es: " + (textElements.length-1));
+        System.out.println("La segunda matris es: " + (text2.length-1));
+        int w = textElements.length-1;
+        int s = Integer.valueOf(textElements[w]);
+        int e = w/s;
+        int u=0;
+        int w1 = text2.length-1;
+        int s1 = Integer.valueOf(text2[w1]);
+        int e1 = w1/s1;
+        int u1=0;
+        mat1 = new double [s][e];  //SEGUNDA MATRIZ------------------------------------------------------------
+        for(int i=0;i<s;i++){
+            for(int j=0;j<e;j++){
+                mat1[i][j]=Integer.valueOf(textElements[u]);
+                //System.out.println(" " + valoi[i][j]);
+                u++;
+            }
+        }
+         mat2 = new double [s1][e1];  //SEGUNDA MATRIZ------------------------------------------------------------
+        for(int i=0;i<s1;i++){
+            for(int j=0;j<e1;j++){
+                mat2[i][j]=Integer.valueOf(text2[u1]);
+                //System.out.println(" " + valoi[i][j]);
+                u1++;
+            }
+        }
+        System.out.println(Arrays.deepToString(mat1));
+        System.out.println("La matris dada es de: " + s + " * "+ e);
+        System.out.println(Arrays.deepToString(mat2));
+        System.out.println("La matris dada es de: " + s1 + " * "+ e1);
+        //Funcion inversa prueva 1 
+        //logica de la invera: determinante, multiplicarlo por el A 
+        double ad [][];
+        ad = n.adjunta(mat2);
+        System.out.println(Arrays.deepToString(ad));
+    }
+      /*public static void Gauss(String palabra){
         int contador=0;
         char[] aCaracteres = palabra.toCharArray();
         for (int x=0;x<aCaracteres.length;x++){
@@ -167,6 +220,6 @@ public class JavaApplication6 {
         }
         System.out.println("El numero de caracteres es: " + contador);
 
-    }*/
+   */
     
 }
