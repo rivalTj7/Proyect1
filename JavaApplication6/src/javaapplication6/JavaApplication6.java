@@ -11,6 +11,7 @@ public class JavaApplication6 {
     public static String ubicacion;
     public static String ubicacion1;
     public static String ubicacion2;
+    public static String ubicacion3;
     public static void main(String[] args) { 
         Scanner teclado = new Scanner(System.in);
         while(true){
@@ -44,6 +45,9 @@ public class JavaApplication6 {
                 desifrar();
                 break;
             case 3:
+                System.out.println("Ingrese ruta del primer archivo: ");
+                ubicacion3=teclado.nextLine();
+                Gauus_Jordan();
                 break;
             case 4:
                 System.exit(0);
@@ -152,18 +156,18 @@ public class JavaApplication6 {
             }
         }
         System.out.println(Arrays.deepToString(MatriR));
-        System.out.println(Arrays.deepToString(n.multiMa(codig, valoi)));
+        System.out.println(Arrays.deepToString(n.multiMa1(codig, valoi)));
         }else {
            System.out.println("Matris errones.. ");
        }
     }
     public static void desifrar(){//--------------------------------------------------------------------------------------------------------------
-       String matri1,matri2;
+        String matri1,matri2;
         matri1 = n.leerTxt(ubicacion1);
         matri2 = n.leerTxt(ubicacion2);
         String  valores,totalText;
-        double mat2[][],ee[][],aa[][];
-        int t , p,mat1[][],inver [][], multiM[][];
+        double mat2[][],ee[][],aa[][],inver [][];
+        int t , p,mat1[][], multiM[][],multiM2[][];
         t=0;
         p=0;
         matri1.split(",");
@@ -186,7 +190,7 @@ public class JavaApplication6 {
         int s1 = Integer.valueOf(text2[w1]);
         int e1 = w1/s1;
         int u1=0;
-        mat1 = new int [s][e];  //Primera MATRIZ------------------------------------------------------------
+        mat1 = new int [s][e];  //Primera MATRIZ-----------------------------------------
         for(int i=0;i<s;i++){
             for(int j=0;j<e;j++){
                 mat1[i][j]=Integer.valueOf(textElements[u]);
@@ -194,7 +198,7 @@ public class JavaApplication6 {
                 u++;
             }
         }
-         mat2 = new double [s1][e1];  //SEGUNDA MATRIZ------------------------------------------------------------
+         mat2 = new double [s1][e1];  //SEGUNDA MATRIZ-----------------------------------
         for(int i=0;i<s1;i++){
             for(int j=0;j<e1;j++){
                 mat2[i][j]=Integer.valueOf(text2[u1]);
@@ -211,7 +215,7 @@ public class JavaApplication6 {
         double a =n.Determinante(0, mat2);
         ee = new double [s1][e1];
         aa = new double [s1][e1];
-        inver = new int [s1][e1];
+        inver = new double [s1][e1];
         System.out.println("El determinante de la matriz es: "+a);
         ee = n.adjunta(mat2);
         aa = n.Transpuesta(ee);
@@ -224,38 +228,61 @@ public class JavaApplication6 {
         System.out.println("No se puede encontrar la inversa de la matriz con determinante 0");
         }
         multiM=new int [mat1.length][inver.length];
+        multiM2=new int [mat1.length][inver.length];
         int uuu;
         uuu= multiM.length*multiM[0].length;
+        System.out.println(e1+" -- "+s);
         
 
-        if(e==s1){
-            multiM= n.multiMa(mat1, inver);
-             System.out.println("La Multiplicacion es:" + Arrays.deepToString(multiM));
+        if(e1==s){
+            //multiM = n.multiMa(inver, mat1);
+            System.out.println(inver.length);
+            System.out.println(mat1.length);
+            multiM2 = n.multiMa(inver, mat1);
+            System.out.println("La Multiplicacion es:" + Arrays.deepToString(multiM2));
         }else{
             System.out.println("Error de matriz");
-        } 
-        byte ascii[]= new byte [uuu];
+        }
+        int asta = multiM2.length*multiM2[0].length;
+        byte ascii[]= new byte [asta];
         int ww;
         ww=0;
-         for(int i=0;i<multiM.length;i++){
-            for(int j=0;j<multiM[0].length;j++){
-               ascii[ww]=(byte)multiM[i][j];
+         for(int i=0;i<multiM2.length;i++){
+            for(int j=0;j<multiM2[0].length;j++){
+               ascii[ww]=(byte)multiM2[i][j];
                 ww++;
             }
         }
         String ssl = new String(ascii);
-        System.out.println(ssl);
+        System.out.println("             La frase desencriptada es : "+ssl);
             
     }
-      /*public static void Gauss(String palabra){
-        int contador=0;
-        char[] aCaracteres = palabra.toCharArray();
-        for (int x=0;x<aCaracteres.length;x++){
-        System.out.println("[" + x + "] " + aCaracteres[x]);
-        contador++;
+    //--------------------------------------------------------------------------------------------GAUUS-JORDAN--------------------------------
+    public static void Gauus_Jordan(){
+        String matri1;
+        matri1 = n.leerTxt(ubicacion3);
+        String  valores,totalText;
+        double mat2[][];
+        int t , p,mat1[][], ent[];
+        t=0;
+        p=0;
+        matri1.split(",");
+        String[] textElements = matri1.split(",");
+        int w = textElements.length-1;
+        int s = Integer.valueOf(textElements[w]);
+        int e = w/s;
+        int u=0;
+        mat1 = new int [s][e];  //Primera MATRIZ
+        ent= new int [s*e];
+        for(int i=0;i<s;i++){
+            for(int j=0;j<e;j++){
+                mat1[i][j]=Integer.valueOf(textElements[u]);
+                ent[u]=mat1[i][j];
+                u++;
+            }
         }
-        System.out.println("El numero de caracteres es: " + contador);
-
-   */
-    
+        System.out.println(Arrays.deepToString(mat1));
+        System.out.println("La matris dada es de: " + s + " * "+ e);
+        n.Gaus(ent,s);
+    }
 }

@@ -8,12 +8,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 public class Archivos {
-    
     /*
     Clase para mandar texto al archivo plano y construir el cifrado...
     */ 
@@ -43,7 +41,6 @@ public class Archivos {
         }catch(Exception e){
             System.err.println("No se encontro archivo");
         }
-        
         return (texto + ","+ a);
     }
     public double Determinante (int i, double [][]matriz){
@@ -78,7 +75,6 @@ public class Archivos {
         }
         return temp;
     }
-   
     public double [][]adjunta(double [][]matriz){
         double[][]tempAdjunta=new double[matriz.length][matriz.length];
          for(int i=0;i<tempAdjunta.length;i++){
@@ -98,38 +94,26 @@ public class Archivos {
             }
         }return Transpuesta;
     }
-    
-    /*public static double Mensa(double [][]matriz){
-        double inversa [][];
-        
-        for (int i =0;i<matriz.length;i++){
-            for (int j=0;j<matriz.length;j++){
-                String Mensa = matriz[i][j]+"\t";
-            }
-        }
-        return inversa;
-    } */
-    public int [][]inv(double dete,double [][]matrizTran){
+    public double [][]inv(double dete,double [][]matrizTran){
         int a, inveInt [][] = new int [matrizTran.length][matrizTran.length];
         double inversa [][]= new double [matrizTran.length][matrizTran.length];
-        if (dete ==0){
-            
+        if (dete ==0){  
         }else {
             for (int i =0;i<matrizTran.length;i++){
                 for (int j=0;j<matrizTran.length;j++){
                     inversa [i][j]=matrizTran[i][j]/dete;
                 }
             }
-            for (int i =0;i<matrizTran.length;i++){
+            /*for (int i =0;i<matrizTran.length;i++){
                 for (int j=0;j<matrizTran.length;j++){
                     a = (int)(inversa[i][j]);
                     inveInt[i][j]=a;
                 }
-            }
+            }*/
         }
-        return inveInt;
+        return inversa;
     }
-    public int [][]multiMa(int [][] codig,int [][]valoi){
+    public int [][]multiMa1(int [][] codig,int [][]valoi){
         int MatriR [][]= new int [codig.length][valoi.length];     
         for(int i = 0; i < codig.length;i++){
             for(int j = 0; j<valoi[0].length;j++){
@@ -145,5 +129,141 @@ public class Archivos {
         }
         return MatriR; 
     }
+    public int [][]multiMa(double [][] inve,int [][]matri){
+        double MatriR [][]= new double [inve.length][matri.length+1];
+        int MatriInt [][]= new int [inve.length][matri.length+1];
+        float s= 0;
+        for(int i = 0; i < inve.length;i++){
+            for(int j = 0; j<matri[0].length;j++){
+                double suma =0.0;
+                for(int k=0;k<inve[0].length;k++){
+                    
+                    suma+= inve[i][k]*(double)matri[k][j];
+                    MatriR[i][j]=suma;
+                    s = (float)MatriR[i][j];
+                    MatriInt[i][j]=Math.round(s);
+                }//System.out.println();
+            }
+        }
+        /*for (int i =0;i<MatriR.length;i++){
+            for (int j=0;j<MatriR[0].length;j++){
+                MatriR2[i][j] = (int)(MatriR[i][j]);
+            }
+        }*/
+        return MatriInt; 
+    }
+    //---------------------------------------------------------------------------------------------------------------------GAUUS--
+    public static void Gaus(int []matri, int aa){
+        //-----------------------------------------------------------------------------------------------------------------------
+        //System.out.print("Ingrese la dimensión de la matriz cuadrada: ");
+            int n = aa, cc=0;
+             double a[][]= new double[n][n];
+            //System.out.print("Ingrese los elementos de la matriz: ");
+            for(int i=0; i<n; i++){
+                for(int j=0; j<n; j++){
+                    a[i][j] = matri[cc];
+                    System.out.print(a[i][j]+"  ");
+                    cc++;
+                } System.out.println();
+            }
+            double d[][] = multmenos(a);           
+            System.out.println("La inversa de la matriz es: ");
+            for (int i=0; i<n; ++i) {
+                for (int j=0; j<n; ++j){
+                    System.out.print(d[i][j]+"  ");
+                }
+                System.out.println();
+            }
+        }
+        
+       //-----------------------------------------------------------------------------------------------------------------------------------
+
+        public static double[][] multmenos(double a[][])         {
+
+            int n = a.length;
+            double x[][] = new double[n][n];
+            double b[][] = new double[n][n];
+            int index[] = new int[n];
+            for (int i=0; i<n; ++i)
+                b[i][i] = 1;
+
+     //La funcion triangulo convierte la matriz en un triángulo para resolver por gauss
+
+            trianguloGauss(a, index);
+
+     // Ingresamos los cocientes de la matriz
+            for (int i=0; i<n-1; ++i)
+                for (int j=i+1; j<n; ++j)
+                    for (int k=0; k<n; ++k)
+                        b[index[j]][k]
+                        	    -= a[index[j]][i]*b[index[i]][k];
+
+     
+     // Aplicamos sustituciones
+            for (int i=0; i<n; ++i)             {
+                x[n-1][i] = b[index[n-1]][i]/a[index[n-1]][n-1];
+                for (int j=n-2; j>=0; --j)                 {
+                    x[j][i] = b[index[j]][i];
+                    for (int k=j+1; k<n; ++k)
+                    {
+                        x[j][i] -= a[index[j]][k]*x[k][i];
+                    }
+
+                    x[j][i] /= a[index[j]][j];
+                }
+            }
+            return x;
+        }
+
+    // Utilizamos un pivote para el método de gauss
+
+        public static void trianguloGauss(double a[][], int index[])  {
+
+            int n = index.length;
+            double c[] = new double[n];
+            for (int i=0; i<n; ++i)
+                index[i] = i;
+
+     // Acá encontramos los factores reescalando fila por fila
+            for (int i=0; i<n; ++i) {
+                double c1 = 0;
+                for (int j=0; j<n; ++j) {
+                    double c0 = Math.abs(a[i][j]);
+                    if (c0 > c1) c1 = c0;
+                }
+                c[i] = c1;
+            }
+
+     // Buscamos los pivotes por cada columna
+            int k = 0;
+            for (int j=0; j<n-1; ++j) {
+                double pi1 = 0;
+                for (int i=j; i<n; ++i)  {
+                    double pi0 = Math.abs(a[index[i]][j]);
+                    pi0 /= c[index[i]];
+                    if (pi0 > pi1) {
+                        pi1 = pi0;
+                        k = i;
+                    }
+                }
+
+       // Intercambiamos filas por el orden del pivote 
+                int itmp = index[j];
+                index[j] = index[k];
+                index[k] = itmp;
+                for (int i=j+1; i<n; ++i) {
+                    double pj = a[index[i]][j]/a[index[j]][j];
+
+     // Registrar los cocientes de los pivotes por debajo de la diagonal
+                    a[index[i]][j] = pj;
+                    
+                    for (int l=j+1; l<n; ++l)
+                        a[index[i]][l] -= pj*a[index[j]][l];
+                }
+            }
+        
+    }
+    
+    
 }
 
