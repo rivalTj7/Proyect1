@@ -31,21 +31,21 @@ public class JavaApplication6 {
         String palabra ;
         switch(opcion){
             case 1:
-                System.out.print("Ingrese Texto a Cifrar:");
+                System.out.println("Ingrese Texto a Cifrar:");
                 palabra = teclado.nextLine();
                 System.out.println("Ingrese ruta del archivo de la matriz:");
                 ubicacion=teclado.nextLine();
                 cifrar(palabra);
                 break;
             case 2:
-                System.out.println("Ingrese ruta del primer archivo: ");
+                System.out.println("Ingrese ruta de la primera matriz: ");
                 ubicacion1=teclado.nextLine();
-                System.out.println("Ingrese ruta del segundo archivo: ");
+                System.out.println("Ingrese ruta de la segunda matriz: ");
                 ubicacion2=teclado.nextLine();
                 desifrar();
                 break;
             case 3:
-                System.out.println("Ingrese ruta del primer archivo: ");
+                System.out.println("Ingrese ruta de la matriz: ");
                 ubicacion3=teclado.nextLine();
                 Gauus_Jordan();
                 break;
@@ -56,6 +56,7 @@ public class JavaApplication6 {
             throw new AssertionError();
         }
     }
+    //----------------------------------------------------------------------------------------------------------------------------------------
     public static void cifrar(String palabra){
         int codig[][];
         int contador=0;
@@ -140,27 +141,14 @@ public class JavaApplication6 {
         System.out.println(Arrays.deepToString(valoi));
         System.out.println("La matris dada es de: " + s + " * "+ e );
         //Multiplicacion de Matriz
-       System.out.println(a +" -- "+s);
-       if (a==s){
-       int MatriR [][]= new int [b][e];
-        for(int i = 0; i < codig.length;i++){
-            for(int j = 0; j<valoi[0].length;j++){
-                int suma =0;
-                    for(int k=0;k<codig[0].length;k++){
-                        suma+= codig[i][k]*valoi[k][j];
-                        if(k == valoi[0].length-1){
-                           // System.out.print(suma);
-                        }
-                        MatriR[i][j]=suma;
-                    }//System.out.println();
-            }
-        }
-        System.out.println(Arrays.deepToString(MatriR));
-        System.out.println(Arrays.deepToString(n.multiMa1(codig, valoi)));
+       System.out.println(e +" -- "+b);
+       if (e==b){
+        System.out.println(Arrays.deepToString(n.multiMa1(valoi, codig)));
         }else {
            System.out.println("Matris errones.. ");
        }
     }
+    
     public static void desifrar(){//--------------------------------------------------------------------------------------------------------------
         String matri1,matri2;
         matri1 = n.leerTxt(ubicacion1);
@@ -259,13 +247,10 @@ public class JavaApplication6 {
     }
     //--------------------------------------------------------------------------------------------GAUUS-JORDAN--------------------------------
     public static void Gauus_Jordan(){
-        String matri1;
+        String matri1,valores,totalText;
         matri1 = n.leerTxt(ubicacion3);
-        String  valores,totalText;
         double mat2[][];
-        int t , p,mat1[][], ent[];
-        t=0;
-        p=0;
+        int t=0,p=0,mat1[][], ent[];
         matri1.split(",");
         String[] textElements = matri1.split(",");
         int w = textElements.length-1;
@@ -273,16 +258,20 @@ public class JavaApplication6 {
         int e = w/s;
         int u=0;
         mat1 = new int [s][e];  //Primera MATRIZ
+        mat2 = new double [s][e];
         ent= new int [s*e];
         for(int i=0;i<s;i++){
             for(int j=0;j<e;j++){
                 mat1[i][j]=Integer.valueOf(textElements[u]);
                 ent[u]=mat1[i][j];
+                mat2[i][j]=mat1[i][j];
                 u++;
             }
         }
         System.out.println(Arrays.deepToString(mat1));
         System.out.println("La matris dada es de: " + s + " * "+ e);
-        n.Gaus(ent,s);
+        //n.Gaus(ent,s);
+        //n.gauuss2(mat2,3);
+        n.Guass21(mat1); 
     }
 }
